@@ -1,14 +1,15 @@
-from urllib import parse
-
-pythonpath='/home/pavel/web/'
-bind = '0.0.0.0:8080'
-
 def application(environ, start_response):
     status = '200 OK'
     headers = [('Content-Type', 'text/plain')]
 
-    query_params = parse.parse_qs(environ['QUERY_STRING'])
-    answer = ''.join([key + '=' + ''.join(value) + '\n' for key, value in query_params.items()]).encode()
+    response_body = '\n'.join(environ['QUERY_STRING'].split('&')).encode()
 
     start_response(status, headers)
-    return iter([answer])
+    return iter([response_body])
+
+'''
+if __name__ == '__main__':
+    environ = {'QUERY_STRING':'a=1&a=2&b=3'}
+
+    print(application(environ, ''))
+'''
