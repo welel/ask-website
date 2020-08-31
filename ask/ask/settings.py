@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'qa',
+	'ask',
     ]
 
 MIDDLEWARE = [
@@ -55,7 +56,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'ask.urls'
+ROOT_URLCONF = 'qa.urls'
 
 TEMPLATES = [
     {
@@ -83,7 +84,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         #ow: 'NAME': BASE_DIR / 'db.sqlite3',
-        'NAME': BASE_DIR + '/' 'db.sqlite3',
+        'NAME': BASE_DIR + '/' + 'db.sqlite3',
     }
 }
 
