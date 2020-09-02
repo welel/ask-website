@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'qa',
-	'ask',
+    'ask',
     ]
 
 MIDDLEWARE = [
@@ -82,9 +82,9 @@ WSGI_APPLICATION = 'ask.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        #ow: 'NAME': BASE_DIR / 'db.sqlite3',
-        'NAME': BASE_DIR + '/' + 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ask',
+        'USER': 'box',
     }
 }
 
