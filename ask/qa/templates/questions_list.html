@@ -1,0 +1,27 @@
+<!-- templates/quesiton_list.html -->
+{% extends 'base.html' %}
+
+{% block title %}
+	{{ block.super }} - Questions
+{% endblock %}
+
+{% block content %}
+	{% for question in questions %}
+		<h2><a href='/question/{{ question.id }}/'>{{ question.title }}</a><h2>
+	{% endfor %}
+
+	<nav>
+		<ul>
+			{% for p in paginator.page_range %}
+				{% if p == page.number %}
+					<li class='active'>
+				{% else %}
+					<li>
+				{% endif %}
+				<a href='{{ paginator.baseurl }}{{ p }}'>{{ p }}</a>
+				</li>
+			{% endfor %}
+		</ul>
+	</nav>
+
+{% endblock %}
