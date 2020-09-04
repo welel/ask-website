@@ -1,8 +1,7 @@
 from django.http import HttpResponse, Http404
 from django.core.paginator import Paginator, Page, EmptyPage
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from qa.models import Question, Answer
-
 
 def paginate(request, qs):
     try:
@@ -22,10 +21,8 @@ def paginate(request, qs):
         page = paginator.page(paginator.num_pages)
     return paginator, page
 
-
 def test(request, *args, **kwargs):
-        return HttpResponse('OK')
-
+    return HttpResponse('OK')
 
 def questions_list_all(request, *args, **kwargs):
     questions = Question.objects.new()
@@ -50,8 +47,8 @@ def questions_list_popular(request, *args, **kwargs):
             })
 
 def question_display(request, *args, **kwargs):
-    question_id = int(request.path().split('/')[-1])
-    question = Question.objects.get_object_or_404(pk=question_id)
+    question_id = int(kwargs['article_id'])
+    question = get_object_or_404(Question, pk=question_id)
     try:
         answers = Answer.objects.filter(question=question)
     except Answer.DoesNotExist:
@@ -60,3 +57,4 @@ def question_display(request, *args, **kwargs):
         'question': question,
         'answers': answers
         })
+
