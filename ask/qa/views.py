@@ -1,7 +1,8 @@
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.core.paginator import Paginator, Page, EmptyPage
 from django.shortcuts import render, get_object_or_404
 from qa.models import Question, Answer
+from qa.forms import AskForm, AnswerForm
 
 def paginate(request, qs):
     try:
@@ -46,15 +47,37 @@ def questions_list_popular(request, *args, **kwargs):
             'page': page 
             })
 
-def question_display(request, *args, **kwargs):
+def question_and_answers(request, *args, **kwargs):
     question_id = int(kwargs['article_id'])
     question = get_object_or_404(Question, pk=question_id)
+    
+    if request.method == 'POST':
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            form.save(question)
+    else:
+        form = AnswerForm()
+
     try:
         answers = Answer.objects.filter(question=question)
     except Answer.DoesNotExist:
         answers = []
+
     return render(request, 'question.html', {
         'question': question,
-        'answers': answers
+        'answers': answers,
+        'form': form
+        })
+
+def question_add(request, *args, **kwargs):
+    if request.method == 'POST':
+        form = AskForm(request.POST)
+        if form.is_valid():
+            question = form.save()
+            return HttpResponseRedirect(question.get_url())
+    else:
+        form = AskForm()
+    return render(request, 'ask.html', {
+        'form': form
         })
 

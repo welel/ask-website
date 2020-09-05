@@ -1,17 +1,11 @@
-<!-- templates/question.html -->
+<!-- templates/ask.html -->
 {% extends 'base.html' %}
 
 {% block title %}
-	{{ question.title }}
+	Ask
 {% endblock %}
 
 {% block content %}
-
-<div>
-	<h1>{{ question.title }}</h1>
-	<p>{{ question.text }}</p>
-</div>
-
 <div>
 	<hr>
 	{% for e in form.non_field_errors %}
@@ -28,14 +22,8 @@
 				</div>
 			{% endfor %}
 		</fieldset>
-		<button type='submit'>Answer</button>
+		<button type='submit'>Ask</button>
 	</form>
 	<hr>
-</div>
-
-<div>	
-	{% for answer in answers %}
-		<p>{{ answer.text }}</p>
-	{% endfor %}
 </div>
 {% endblock %}
