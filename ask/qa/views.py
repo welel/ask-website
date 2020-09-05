@@ -52,9 +52,10 @@ def question_and_answers(request, *args, **kwargs):
     question = get_object_or_404(Question, pk=question_id)
     
     if request.method == 'POST':
-        form = AnswerForm(request.POST)
+        answer = Answer(question=question)
+        form = AnswerForm(request.POST, instance=answer)
         if form.is_valid():
-            form.save(question)
+            form.save()
     else:
         form = AnswerForm()
 

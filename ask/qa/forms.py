@@ -17,16 +17,27 @@ class AskForm(forms.Form):
         return question
 
 
+class AnswerForm(forms.ModelForm):
+    class Meta:
+        model = Answer
+        fields = ['text']
+'''
+    def save(self):
+        answer = Answer(text=self.text,question=self.question)
+        answer.save()
+        return answer
+'''
+
+'''
 class AnswerForm(forms.Form):
-    '''
     def __init__(self, question=None, *args, **kwargs):
         super(AnswerForm, self).__init__(*args, **kwargs)
         self.question = question
-'''
+
     text = forms.CharField(min_length=1)
 
     def save(self, question):
         answer = Answer(question=question, **self.cleaned_data)
         answer.save()
         return answer
-
+'''
