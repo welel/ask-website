@@ -2,7 +2,10 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.core.paginator import Paginator, Page, EmptyPage
 from django.shortcuts import render, get_object_or_404
 from qa.models import Question, Answer
-from qa.forms import AskForm, AnswerForm
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.forms import ValidationError
+from qa.forms import AskForm, AnswerForm, SignupForm, SigninForm
 
 def paginate(request, qs):
     try:
@@ -52,7 +55,7 @@ def question_and_answers(request, *args, **kwargs):
     question = get_object_or_404(Question, pk=question_id)
     
     if request.method == 'POST':
-        answer = Answer(question=question)
+        answer = Answer(question=question, author=request.user)
         form = AnswerForm(request.POST, instance=answer)
         if form.is_valid():
             form.save()
@@ -70,9 +73,11 @@ def question_and_answers(request, *args, **kwargs):
         'form': form
         })
 
+# redirect if user isn't authntcatwetwetw
 def question_add(request, *args, **kwargs):
     if request.method == 'POST':
-        form = AskForm(request.POST)
+        question = Question(author=request.user)
+        form = AskForm(request.POST, instance=question)
         if form.is_valid():
             question = form.save()
             return HttpResponseRedirect(question.get_url())
@@ -82,3 +87,32 @@ def question_add(request, *args, **kwargs):
         'form': form
         })
 
+def signup(request, *args, **kwargs):
+    if request.method == 'POST':
+        form = SignupForm(request.POST, instance=User())
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return HttpResponseRedirect('/')
+    else:
+        form = SignupForm()
+    return render(request, 'signup.html', {'form': form})
+
+def signin(request, *args, **kwargs):
+    error = ''
+    if request.method == 'POST':
+        form = SigninForm(request.POST, instance=User())
+        if form.is_valid():
+            login(request, form.instance)
+            return HttpResponseRedirect('/')
+        else:
+            error = 'Username or password is incorrect'
+    form = SigninForm()
+    return render(request, 'signin.html', {
+        'form': form,
+        'error': error
+        })
+
+def log_out(request, *args, **kwargs):
+    logout(request)
+    return HttpResponseRedirect('/')

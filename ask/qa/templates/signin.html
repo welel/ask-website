@@ -1,0 +1,28 @@
+<!-- templates/signin.html -->
+{% extends 'base.html' %}
+
+{% block title %}
+	Sign In
+{% endblock %}
+
+{% block content %}
+<div>
+	{% for e in form.non_field_errors %}
+		<div>Error: {{ e }}</div>
+	{% endfor %}
+	<h3>{{ error }}</h3>
+	<form method='post'>
+		{% csrf_token %}
+		<fieldset>
+			{% for field in form %}
+				<div>
+					<label>{{ field.label }}</label>
+					<div>{{ field }}</div>
+				</div>
+				{% if field.errors %}<div>{{ field.errors }}</div>{% endif %}
+			{% endfor %}
+		</fieldset>
+		<button type='submit'>Sing In</button>
+	</form>
+</div>
+{% endblock %}

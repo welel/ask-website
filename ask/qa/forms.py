@@ -1,5 +1,7 @@
 from django import forms
 from qa.models import Question, Answer
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 
 ''' to-DO: 
 * Make Profanity Checker in the future 
@@ -7,37 +9,45 @@ from qa.models import Question, Answer
 * Find suitable value of min/max length 
 '''
 
-class AskForm(forms.Form):
-    title = forms.CharField(max_length=255, min_length=1)
-    text = forms.CharField(widget=forms.Textarea, min_length=1)
-
-    def save(self):
-        question = Question(**self.cleaned_data)
-        question.save()
-        return question
-
+class AskForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = ['title', 'text']
+        widgets = {'text': forms.Textarea()}
+    # link user with question
 
 class AnswerForm(forms.ModelForm):
     class Meta:
         model = Answer
         fields = ['text']
-'''
-    def save(self):
-        answer = Answer(text=self.text,question=self.question)
-        answer.save()
-        return answer
-'''
 
-'''
-class AnswerForm(forms.Form):
-    def __init__(self, question=None, *args, **kwargs):
-        super(AnswerForm, self).__init__(*args, **kwargs)
-        self.question = question
+class SignupForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password']
+        widgets = { 
+                'email': forms.EmailInput(), 
+                'password' : forms.PasswordInput()
+                }
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if User.objects.exclude(pk=self.instance.pk).filter(username=username).exists():
+            raise ValidationError('Username "%s" is already exists.' % username)
+        return username
 
-    text = forms.CharField(min_length=1)
+class SigninForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'password']
+        widgets = {'password': forms.PasswordInput()}
+    
+    def clean(self):
+        username = self.cleaned_data['username']
+        password = self.cleaned_data['password']
+        try:
+            self.instance = User.objects.get(username=username, password=password)
+        except User.DoesNotExist:
+            raise ValidationError('Username or password is wrong')
+        return self.cleaned_data
 
-    def save(self, question):
-        answer = Answer(question=question, **self.cleaned_data)
-        answer.save()
-        return answer
-'''
+
