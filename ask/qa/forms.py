@@ -29,14 +29,32 @@ class AnswerForm(forms.ModelForm):
 
 class SignupForm(forms.ModelForm):
     '''Website registration form'''
+    def __init__(self, *args, **kwargs):
+        super(SignupForm, self).__init__(*args, **kwargs)
+        self.confirm_password = forms.CharField(
+                                           widget=forms.PasswordInput(), 
+                                           label='Password Confirmation'
+                                          )   
     class Meta:
         model = User
-        fields = ['username', 'email', 'password']
+        fields = [
+                    'first_name',
+                    'last_name',
+                    'username', 
+                    'email', 
+                    'password',
+                    ]
         widgets = { 
                 'email': forms.EmailInput(), 
                 'password' : forms.PasswordInput()
                 }
-
+        labels = {
+                'first_name': 'First name',
+                'last_name': 'Last name',
+                'username': 'Username',
+                'email': 'Email',
+                'password': 'Password'
+                } 
     def clean_username(self):
         username = self.cleaned_data['username']
         if User.objects.exclude(

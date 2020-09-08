@@ -5,24 +5,30 @@
 	Sign In
 {% endblock %}
 
-{% block content %}
-<div>
+{% block header %}
+	{% include 'header.html' %}
+{% endblock %}
+
+{% block main %}
+<div class='sign' id='signin'>
+	<h2>Sign In</h2>
 	{% for e in form.non_field_errors %}
 		<div>Error: {{ e }}</div>
 	{% endfor %}
-	<h3>{{ error }}</h3>
 	<form method='post'>
 		{% csrf_token %}
-		<fieldset>
 			{% for field in form %}
-				<div>
-					<label>{{ field.label }}</label>
-					<div>{{ field }}</div>
-				</div>
-				{% if field.errors %}<div>{{ field.errors }}</div>{% endif %}
+				<figure>
+					<figcaption>{{ field.label }}</figcaption>
+					{{ field }}
+				</figure>
+				{% if field.errors %}<p>{{ field.errors }}<p>{% endif %}
 			{% endfor %}
-		</fieldset>
-		<button type='submit'>Sing In</button>
+				<h5>{{ error }}</h5>
+				<figure id='button_figure'>
+					<button type='submit'>Sing In</button>
+				</figure>
 	</form>
+	<p>Don't have an account?<br/>Then <a href='/signup/'>register</a>.</p>
 </div>
 {% endblock %}

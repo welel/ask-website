@@ -1,13 +1,19 @@
 <!doctype html>
-
 <!-- templates/base.html -->
+{% load static %}
 <html>
 	<head>
-			<meta charset='utf-8'>
-			<title>{% block title %}Q&A{% endblock %}</title>
+		<meta charset='utf-8'>
+		<title>{% block title %}Question&Answer{% endblock %}</title>
+		<meta name='viewport' content='width=device-width'>
+		<link rel='stylesheet' type='text/css' href='{% static "qa/css/style.css" %}'>
+		{% block extrahead %}{% endblock %}
 	</head>
 	<body>
-			{% block content %}{% endblock %}
+		{% block header %}{% endblock %}
+		{% block main %}{% endblock %}
+		{% block footer %}{% endblock %}
+		{% block scripts %}{% endblock %}
 	</body>
 </html>
 

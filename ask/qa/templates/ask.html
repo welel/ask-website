@@ -2,10 +2,14 @@
 {% extends 'base.html' %}
 
 {% block title %}
-	Ask
+Add Question
 {% endblock %}
 
-{% block content %}
+{% block header %}
+	{% include 'header.html' %}
+{% endblock %}
+
+{% block main %}
 <div>
 	<hr>
 	{% for e in form.non_field_errors %}

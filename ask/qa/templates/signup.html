@@ -5,24 +5,33 @@
 	Sign Up
 {% endblock %}
 
-{% block content %}
-<div>
+{% block header %}
+	{% include 'header.html' %}
+{% endblock %}
+
+{% block main %}
+<div class='sign' id='signup'>
+	<h2>Sign Up</h2>
 	{% for e in form.non_field_errors %}
 		<div>Error: {{ e }}</div>
 	{% endfor %}
 	<h3 color='red'>{{ error }}</h3>
 	<form method='post'>
 		{% csrf_token %}
-		<fieldset>
-			{% for field in form %}
-				<div>
-					<label>{{ field.label }}</label>
-					<div>{{ field }}</div>
-				</div>
-				{% if field.errors %}<div>{{ field.errors }}</div>{% endif %}
-			{% endfor %}
-		</fieldset>
-		<button type='submit'>Sing Up</button>
+		{% for field in form %}
+			<figure>
+				<figcaption>{{ field.label }}</figcaption>
+				{{ field }}
+			</figure>
+			{% if field.errors %}<p>{{ field.errors }}</p>{% endif %}
+		{% endfor %}
+			<figure>
+				<button type='submit'>Sing Up</button>
+			</figure>
 	</form>
+	<p>"The beginning of knowledge is the discovery of something we do not understand."<br/>Frank Herbert</p>
 </div>
+
+
+
 {% endblock %}

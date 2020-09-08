@@ -2,26 +2,24 @@
 {% extends 'base.html' %}
 
 {% block title %}
-	{{ block.super }} - Questions
-{% endblock %}
+	{{	block.super	}} - New
+{% endblock	%}
 
-{% block content %}
-	{% for question in questions %}
-		<h2><a href='/question/{{ question.id }}/'>{{ question.title }}</a><h2>
-	{% endfor %}
+{% block header	%}
+	{%	include	'header.html' %}
+{% endblock	%}
 
-	<nav>
-		<ul>
-			{% for p in paginator.page_range %}
-				{% if p == page.number %}
-					<li class='active'>
-				{% else %}
-					<li>
-				{% endif %}
-				<a href='{{ paginator.baseurl }}{{ p }}'>{{ p }}</a>
-				</li>
-			{% endfor %}
-		</ul>
-	</nav>
+{% block main %}
+<main>
+	<div class='wrapper'>
+		{%	for	question in	questions %}
+			<div class='question'>
+				<h3><a href='/question/{{ question.id }}/'>{{ question.title }}</a></h3>
+				<p>{{ question.author }} | {{ question.added_at }}</p>
+			</div>	
+		{%	endfor %}
 
-{% endblock %}
+		{% include 'page_navigation.html' %}	
+	<div>
+</main>
+{% endblock	%}

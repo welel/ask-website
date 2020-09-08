@@ -100,7 +100,12 @@ def signin(request, *args, **kwargs):
     if request.method == 'POST':
         form = SigninForm(request.POST)
         if form.is_valid():
-            login(request, form.instance)
+            user = authenticate(
+                                request,
+                                username=request.POST['username'],
+                                password=request.POST['password']
+                                )
+            login(request, user)
             return HttpResponseRedirect('/')
         else:
             error = 'Username or password is incorrect'

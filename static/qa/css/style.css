@@ -1,0 +1,231 @@
+:root {
+	--imperial-red: #e63946ff;
+	--imperial-red-light: #e6394620;
+	--honeydew: #f1faeeff;
+	--powder-blue: #a8dadcff;
+	--celadon-blue: #457b9dff;
+	--prussian-blue: #1d3557ff;
+	
+	--fire-engine-red: #d50b26ff;
+	--cultured: #f4f5f6ff;
+	--jet: #313335ff;
+}
+
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+body {
+	background-color: var(--cultured);
+	font-family: sans-serif;
+	color: var(--jet);
+}
+
+.wrapper {
+	max-width: 1000px;
+	margin-left: auto;
+    margin-right: auto;
+}
+
+a {
+	color: var(--jet);
+	text-decoration: none;
+}
+
+/*--- Header ---*/
+
+header {
+	height: 50px;
+	margin-bottom: 25px;
+	background-color: white;
+	box-shadow: 0px 5px 5px #f8f8f8;
+}
+
+header nav {
+	padding: 8px 0px;	
+}
+
+header nav ul {
+	list-style-type: none;
+}
+
+header nav li {
+	font-size: 20px;
+	font-weight: 700;
+	padding: 5px 10px;
+}
+
+header nav li a {
+	color: var(--jet);	
+}
+
+header nav li:hover {
+	background-color: var(--imperial-red);
+}
+
+.header_li_left {
+	float: left;	
+}
+
+.header_li_right {
+	float: right;
+}
+
+#logo a {
+	color: var(--fire-engine-red);
+	font-weight: 1000;
+}
+
+#add_question a {
+	color: var(--fire-engine-red);
+}
+
+
+
+/*--- Question-List ---*/
+
+.question {
+	margin: auto;
+	margin-top: 10px;
+	max-width: 700px;
+	background-color: white;
+	border-radius: 4px;
+}
+
+.question h3 {
+	padding: 20px 15px 20px 36px;
+}
+
+.question p {
+	text-align: end;
+	padding: 0px 10px 10px 0px;
+	color: #505050;
+	font-size: 14px;
+}
+
+
+/*--- Page Navigation ---*/
+.page_navigation ul {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	font-size: 18px;
+	list-style-type: none;
+	text-decoration: none;
+	
+}
+
+.page_navigation ul li {
+	padding: 20px 6px;	
+}
+
+.page_navigation ul li a:hover {
+	color: black;
+	text-decoration: underline;
+}
+
+.page_navigation .active_page a {
+	color: var(--fire-engine-red);
+}
+
+
+/*-- Sign In/Up --*/
+
+.sign {
+	margin: auto;
+	margin-top: 50px;
+	box-shadow: 0 0 20px rgba(0,0,0,0.3);
+	border-radius: 4px;
+	display: flex;
+	flex-direction: column;
+}
+
+#signin {
+	width: 390px;
+}
+
+#signup {
+	width: 580px;
+}
+
+.sign h2 {
+	margin-top: 50px; 
+	text-align: center;
+}
+
+.sign form {
+	margin-top: 0px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 580px;
+    margin-bottom: 0px;
+}
+
+.sign figure {
+	margin-top: 26px;
+	margin-right: 20px;
+}
+
+.sign figcaption {
+	padding: 5px 3px;	
+}
+
+.sign input {
+	background-color: #eeeeee;
+	height: 40px;
+	width: 220px;
+	border-radius: 5px;
+	border: 1px solid rgb(200,200,200);
+	font-size: 14px;
+	text-indent: 10px;
+}
+
+.sign h5 {
+	margin-top: 10px;	
+	color: var(--imperial-red);
+}
+
+#button_figure {
+	margin-top: 30px;
+	display: flex;
+	justify-content: center;
+}
+
+.sign button {
+	margin-top: 27px;
+	font-size: 16px;
+	font-weight: 800;
+	background-color: var(--imperial-red);
+	color: white;
+	border: none;
+	border-radius: 5px;
+	height: 45px;
+	width: 220px;
+	transition: all 0.3s ease 0s;
+}
+
+.sign button:hover {
+	border-radius: 10px;
+	font-size: 15px;
+}
+
+.sign p {
+	margin-top: 50px;
+	padding: 0 70px 0 70px;
+	margin-bottom: 50px;
+}
+
+.sign a {
+	color: var(--celadon-blue);
+	transition: all 0.3s ease 0s;
+}
+
+.sign a:hover {
+	color: var(--prussian-blue);
+	text-decoration: underline;
+}
+
+
+

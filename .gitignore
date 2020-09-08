@@ -1,4 +1,4 @@
 __pycache__
 *.pyc
-SECRET_KEY.txt
 env
+.env
