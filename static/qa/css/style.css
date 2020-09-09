@@ -61,7 +61,7 @@ header nav li a {
 }
 
 header nav li:hover {
-	background-color: var(--imperial-red);
+	background-color: var(--imperial-red-light);
 }
 
 .header_li_left {
@@ -79,6 +79,10 @@ header nav li:hover {
 
 #add_question a {
 	color: var(--fire-engine-red);
+}
+
+#header_user {
+	
 }
 
 
@@ -307,6 +311,10 @@ textarea::placeholder {
 	padding: 5px 5px;	
 }
 
+.main_question textarea::placeholder {
+	font-size: 16px;	
+}
+
 .main_question button {
 	margin: auto;
 	font-size: 20px;
@@ -340,6 +348,20 @@ textarea::placeholder {
 	padding: 10px 20px 15px 20px;
 	font-size: 16px;	
   	word-spacing: 1px;
+}
+
+#auth_warning {
+	padding: 5px 20px 20px 15px;
+	font-size: 18px;	
+}
+#auth_warning a {
+	color: var(--imperial-red);
+	text-decoration: underline;
+}
+
+#auth_warning a:hover {
+	color: var(--imperial-red);
+	text-decoration: none;
 }
 
 

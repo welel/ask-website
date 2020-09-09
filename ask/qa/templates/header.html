@@ -6,7 +6,11 @@
 				<li id='logo' class='header_li_left'><a href='/'>Q</a></li>
 				<li class='header_li_left'><a href='/new/'>Questions</a></li>
 				<li id='add_question' class='header_li_left'><a href='/ask/'>Add Question</a></li>
-				<li class='header_li_right'><a href='/signin/'>Sign In</a></li>
+				{% if user.is_authenticated %}
+				<li class='header_li_right'><a id='header_user' href='/logout/'>{{ user }}</a></li>
+				{% else %}
+					<li class='header_li_right'><a href='/signin/'>Sign In</a></li>
+				{% endif %}			
 			</ul>
 		</nav>
 	</div>

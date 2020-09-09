@@ -20,17 +20,21 @@
 	{% for e in form.non_field_errors %}
 		<p> Error: {{ e }} </p>
 	{% endfor %}
-	<form method='post'>
-		{% csrf_token %}
-		{% for field in form %}
-			<figure>
-				{{ field }}
+	{% if user.is_authenticated %}
+		<form method='post'>
+			{% csrf_token %}
+			{% for field in form %}
+				<figure>
+					{{ field }}
+				</figure>
+			{% endfor %}
+			<figure id='answer_button'>
+				<button type='submit'>Answer</button>
 			</figure>
-		{% endfor %}
-		<figure id='answer_button'>
-			<button type='submit'>Answer</button>
-		</figure>
-	</form>
+		</form>
+	{% else %}
+		<p id='auth_warning'><a href='/signin/'>Sign in</a> if you want to answer on the question.</p>
+	{% endif %}
 </div>
 		
 {% for answer in answers %}

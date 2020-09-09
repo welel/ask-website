@@ -21,13 +21,14 @@ def questions_list_all(request, *args, **kwargs):
     return render(request, 'questions_list.html', { 
             'questions': page.object_list,
             'paginator': paginator, 
-            'page': page 
+            'page': page,
+            'user': request.user 
             })
 
 
 def question_and_answers(request, *args, **kwargs):
     '''Renders a page of one question with a form for the answer
-         and other answers'''
+         and other answers, and manages POST request from the form'''
     question_id = int(kwargs['article_id'])
     question = get_object_or_404(Question, pk=question_id)
     if request.method == 'POST':
@@ -44,7 +45,8 @@ def question_and_answers(request, *args, **kwargs):
     return render(request, 'question.html', {
         'question': question,
         'answers': answers,
-        'form': form
+        'form': form,
+        'user': request.user
         })
 
 
