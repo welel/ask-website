@@ -11,12 +11,10 @@ class AskForm(forms.ModelForm):
     '''Form of question asking'''
     class Meta:
         model = Question
-        fields = ['title', 'text']
-        widgets = {'text': forms.Textarea()}
-        labels = {
-            'title': 'Question title',
-            'text': 'Question text'
-        }
+        fields = ['text']
+        widgets = {'text': forms.Textarea(attrs={'placeholder': '''You can '''+
+					'''start your question with "What", "Why", "How", etc.'''})}
+        labels = {'text': 'Question text'}
 
 
 class AnswerForm(forms.ModelForm):
@@ -24,6 +22,8 @@ class AnswerForm(forms.ModelForm):
     class Meta:
         model = Answer
         fields = ['text']
+        widgets = {'text': forms.Textarea(attrs={
+                            'placeholder': 'Write your answer here...'})}
         label = {'text': 'Answer text'}
 
 

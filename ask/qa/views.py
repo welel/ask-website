@@ -25,21 +25,6 @@ def questions_list_all(request, *args, **kwargs):
             })
 
 
-@require_GET
-def questions_list_popular(request, *args, **kwargs):
-    '''Renders a page with list of questions sorted by question rating'''
-    questions = Question.objects.popular()
-    paginator, page = paginate(request, questions)
-    # Use reserve() routing new time
-    paginator.baseurl = '/popular/?page='
-    return render(request, 'questions_list.html', {
-            'questions': page.object_list,
-            'paginator': paginator, 
-            'page': page 
-            })
-
-
-
 def question_and_answers(request, *args, **kwargs):
     '''Renders a page of one question with a form for the answer
          and other answers'''

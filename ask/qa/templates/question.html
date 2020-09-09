@@ -10,36 +10,36 @@
 {% endblock %}
 
 {% block main %}
-
-<div>
-	<h1>{{ question.title }}</h1>
-	<p>{{ question.text }}</p>
-</div>
-
-<div>
+<div class='main_question'>
+	<h1>{{ question.text }}</h1>
+	<div id='main_question_meta'>
+		<span id='main_question_author'>{{ question.author }}</span>
+		<span id='main_question_data'>&nbsp;|&nbsp;{{ question.added_at }}</span>
+	</div>
 	<hr>
 	{% for e in form.non_field_errors %}
-		<div> Error: {{ e }} </div>
+		<p> Error: {{ e }} </p>
 	{% endfor %}
-
 	<form method='post'>
 		{% csrf_token %}
-		<fieldset>
-			{% for field in form %}
-				<div>
-					<label>{{ field.label }}</label>
-					<div>{{ field }}</div>
-				</div>
-			{% endfor %}
-		</fieldset>
-		<button type='submit'>Answer</button>
+		{% for field in form %}
+			<figure>
+				{{ field }}
+			</figure>
+		{% endfor %}
+		<figure id='answer_button'>
+			<button type='submit'>Answer</button>
+		</figure>
 	</form>
-	<hr>
 </div>
-
-<div>	
-	{% for answer in answers %}
-		<p>{{ answer.text }}</p>
-	{% endfor %}
-</div>
+		
+{% for answer in answers %}
+		<div class='main_question answers'>
+			<div class='answer_meta'>
+				<p>{{ answer.author }}</p>
+				<p>{{ answer.added_at }}</p>
+			</div>
+			<p class='answer_text'>{{ answer.text }}</p>
+		</div>
+{% endfor %}
 {% endblock %}
