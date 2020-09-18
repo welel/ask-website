@@ -1,14 +1,14 @@
 from django import forms
-from qa.models import Question, Answer
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.models import User
-from django.conf import settings
+from qa.models import Answer, Question
 
 
 class AskForm(forms.ModelForm):
-    '''Form of question asking'''
+    '''Asking question form.'''
     class Meta:
         model = Question
         fields = ['text']
@@ -18,7 +18,7 @@ class AskForm(forms.ModelForm):
 
 
 class AnswerForm(forms.ModelForm):
-    '''Form of question answering'''
+    '''Answering question form.'''
     class Meta:
         model = Answer
         fields = ['text']
@@ -28,7 +28,7 @@ class AnswerForm(forms.ModelForm):
 
 
 class SignupForm(forms.ModelForm):
-    '''Website registration form'''
+    '''Website registration form.'''
     def __init__(self, *args, **kwargs):
         super(SignupForm, self).__init__(*args, **kwargs)
         self.confirm_password = forms.CharField(
@@ -73,7 +73,7 @@ class SignupForm(forms.ModelForm):
 
 
 class SigninForm(forms.ModelForm):
-    '''Website login form'''
+    '''Website login form.'''
     class Meta:
         model = User
         fields = ['username', 'password']

@@ -13,7 +13,7 @@ from qa.shortcuts import paginate
 
 @require_GET
 def questions_list_all(request, *args, **kwargs):
-    '''Renders a page with list of questions sorted by addition time'''
+    '''Renders a page with list of questions sorted by addition time.'''
     questions = Question.objects.new()
     paginator, page = paginate(request, questions)
     # Use reserve() routing new time
@@ -27,8 +27,10 @@ def questions_list_all(request, *args, **kwargs):
 
 
 def question_and_answers(request, *args, **kwargs):
-    '''Renders a page of one question with a form for the answer
-         and other answers, and manages POST request from the form'''
+    '''
+    Renders a page of one question with a form for the answer
+    and other answers, and manages POST request from the form.
+    '''
     question_id = int(kwargs['article_id'])
     question = get_object_or_404(Question, pk=question_id)
     if request.method == 'POST':
@@ -52,8 +54,10 @@ def question_and_answers(request, *args, **kwargs):
 
 @login_required(login_url='/signin/')
 def question_add(request, *args, **kwargs):
-    '''Renders a page with a form for adding a question
-        and manages POST requests to the form'''
+    '''
+    Renders a page with a form for adding a question
+    and manages POST requests to the form.
+    '''
     if request.method == 'POST':
         question = Question(author=request.user)
         form = AskForm(request.POST, instance=question)
@@ -66,8 +70,10 @@ def question_add(request, *args, **kwargs):
 
 
 def signup(request, *args, **kwargs):
-    '''Renders a page with a form for user registration
-        and manages POST requests to the form'''
+    '''
+    Renders a page with a form for user registration
+    and manages POST requests to the form.
+    '''
     logout(request)
     if request.method == 'POST':
         form = SignupForm(request.POST)
@@ -81,8 +87,10 @@ def signup(request, *args, **kwargs):
 
 
 def signin(request, *args, **kwargs):
-    '''Renders a page with a form for login on the website
-        and manages POST requests to the form'''
+    '''
+    Renders a page with a form for login on the website
+    and manages POST requests to the form.
+    '''
     error = ''
     if request.method == 'POST':
         form = SigninForm(request.POST)
@@ -106,5 +114,3 @@ def signin(request, *args, **kwargs):
 def log_out(request, *args, **kwargs):
     logout(request)
     return HttpResponseRedirect('/')
-
-

@@ -2,7 +2,7 @@ from django.core.paginator import Paginator, EmptyPage
 
 
 def paginate(request, query_set):
-    '''Pages limit validation, returns Paginator and current page'''
+    '''Pages limit validation, returns Paginator and current page.'''
     try:
         limit = int(request.GET.get('limit', 10))
     except ValueError:
@@ -19,4 +19,3 @@ def paginate(request, query_set):
     except EmptyPage: 
         page = paginator.page(paginator.num_pages)
     return paginator, page
-
