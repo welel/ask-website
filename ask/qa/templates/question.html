@@ -17,6 +17,12 @@
 		<span id='main_question_data'>&nbsp;|&nbsp;{{ question.added_at }}</span>
 	</div>
 	<hr>
+	{% if user == question.author %}
+		<form action='/delete_question/' method='post'>
+			{% csrf_token %}
+			<button id='delete_question_button' type='submit'>Delete question</button>
+		</form>
+	{% endif %}
 	{% for e in form.non_field_errors %}
 		<p> Error: {{ e }} </p>
 	{% endfor %}

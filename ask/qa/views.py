@@ -29,7 +29,7 @@ def questions_list_all(request, *args, **kwargs):
 def question_and_answers(request, *args, **kwargs):
     '''
     Renders a page of one question with a form for the answer
-    and other answers, and manages POST request from the form.
+    and users answers, and manages POST request from the form.
     '''
     question_id = int(kwargs['article_id'])
     question = get_object_or_404(Question, pk=question_id)
@@ -67,6 +67,21 @@ def question_add(request, *args, **kwargs):
     else:
         form = AskForm()
     return render(request, 'ask.html', {'form': form})
+
+
+@require_POST
+@login_required(login_url='/signin/')
+def delete_question(request, *args, **kwargs):
+    '''Deliting of the question and redirect on the main page.'''
+    question_id = request.META['HTTP_REFERER'].split('/')[-2]
+    try:
+        question = Question.objects.filter(pk=question_id).delete()
+        Answer.objects.filter(question=question).delete()
+    except Question.DoesNotExist:
+        raise Question.DoesNotExist
+    except Answer.DoesNotExist:
+        raise Answer.DoesNotExist
+    return HttpResponseRedirect('/')
 
 
 def signup(request, *args, **kwargs):

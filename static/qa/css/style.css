@@ -296,6 +296,14 @@ textarea::placeholder {
 	padding: 30px 30px 5px 30px;
 }
 
+#delete_question_button {
+	width: 100px;
+	height: 20px;
+	font-size: 12px;
+	float: right;
+	margin-right: 15px;
+}
+
 .main_question hr {
 	margin: 20px 36px 10px 36px;	
 }
