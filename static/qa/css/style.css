@@ -296,14 +296,6 @@ textarea::placeholder {
 	padding: 30px 30px 5px 30px;
 }
 
-#delete_question_button {
-	width: 100px;
-	height: 20px;
-	font-size: 12px;
-	float: right;
-	margin-right: 15px;
-}
-
 .main_question hr {
 	margin: 20px 36px 10px 36px;	
 }
@@ -340,7 +332,25 @@ textarea::placeholder {
 	padding-bottom: 20px;	
 }
 
+/* Delete answer/question button */
+.delete_button {
+	padding-bottom: 10px;	
+}
 
+.delete_button button {
+	width: 100px;
+	height: 20px;
+	font-size: 12px;
+	float: right;
+	margin-right: 15px;
+}
+
+.delete_button button:hover {
+	border-radius: 10px;
+	font-size: 12px;
+}
+
+/* Answers to the question */
 .answers {
 	margin: auto;
 	margin-top:	10px;

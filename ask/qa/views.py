@@ -26,6 +26,7 @@ def questions_list_all(request, *args, **kwargs):
             })
 
 
+# TODO: split question form and answer form
 def question_and_answers(request, *args, **kwargs):
     '''
     Renders a page of one question with a form for the answer
@@ -82,6 +83,17 @@ def delete_question(request, *args, **kwargs):
     except Answer.DoesNotExist:
         raise Answer.DoesNotExist
     return HttpResponseRedirect('/')
+
+
+@require_POST
+@login_required(login_url='/signin/')
+def delete_answer(request, *args, **kwargs):
+    '''Deliting of the answer and redirect on question page.'''
+    try:
+        Answer.objects.filter(pk=request.POST['answer_id']).delete()
+    except Answer.DoesNotExist:
+        raise Answer.DoesNotExist
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
 def signup(request, *args, **kwargs):

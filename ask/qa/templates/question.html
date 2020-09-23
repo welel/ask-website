@@ -2,7 +2,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-	{{ question.title }}
+	{{ question.text }}
 {% endblock %}
 
 {% block header %}
@@ -18,9 +18,9 @@
 	</div>
 	<hr>
 	{% if user == question.author %}
-		<form action='/delete_question/' method='post'>
+		<form class='delete_button' action='/delete_question/' method='post'>
 			{% csrf_token %}
-			<button id='delete_question_button' type='submit'>Delete question</button>
+			<button type='submit'>Delete question</button>
 		</form>
 	{% endif %}
 	{% for e in form.non_field_errors %}
@@ -50,6 +50,13 @@
 				<p>{{ answer.added_at }}</p>
 			</div>
 			<p class='answer_text'>{{ answer.text }}</p>
+			{% if user == answer.author %}
+				<form class='delete_button' action='/delete_answer/' method='post'>
+					{% csrf_token %}
+					<input type='text' name='answer_id' value='{{ answer.id }}' style='visibility: hidden;'/>
+					<button type='submit'>Delete answer</button>
+				</form>
+			{% endif %}
 		</div>
 {% endfor %}
 {% endblock %}
