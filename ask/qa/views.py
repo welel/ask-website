@@ -6,9 +6,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.forms import ValidationError
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET, require_POST
-from qa.forms import AskForm, AnswerForm, SignupForm, SigninForm
-from qa.models import Question, Answer
-from qa.shortcuts import paginate
+from .forms import AskForm, AnswerForm, SignupForm, SigninForm
+from .models import Question, Answer
+from .shortcuts import paginate
 
 
 @require_GET
@@ -19,7 +19,7 @@ def questions_list_all(request, *args, **kwargs):
     # Use reserve() routing new time
     paginator.baseurl = '/?page='
     return render(request, 'questions_list.html', { 
-            'questions': page.object_list,
+            'questions': paginator.get_page(page),
             'paginator': paginator, 
             'page': page,
             'user': request.user 
@@ -32,7 +32,7 @@ def question_and_answers(request, *args, **kwargs):
     Renders a page of one question with a form for the answer
     and users answers, and manages POST request from the form.
     '''
-    question_id = int(kwargs['article_id'])
+    question_id = int(kwargs['question_id'])
     question = get_object_or_404(Question, pk=question_id)
     if request.method == 'POST':
         answer = Answer(question=question, author=request.user)
@@ -74,14 +74,10 @@ def question_add(request, *args, **kwargs):
 @login_required(login_url='/signin/')
 def delete_question(request, *args, **kwargs):
     '''Deliting of the question and redirect on the main page.'''
-    question_id = request.META['HTTP_REFERER'].split('/')[-2]
-    try:
-        question = Question.objects.filter(pk=question_id).delete()
-        Answer.objects.filter(question=question).delete()
-    except Question.DoesNotExist:
-        raise Question.DoesNotExist
-    except Answer.DoesNotExist:
-        raise Answer.DoesNotExist
+    Question.objects.filter(
+        pk=kwargs['question_id'],
+        author=request.user
+    ).delete()
     return HttpResponseRedirect('/')
 
 
@@ -89,10 +85,10 @@ def delete_question(request, *args, **kwargs):
 @login_required(login_url='/signin/')
 def delete_answer(request, *args, **kwargs):
     '''Deliting of the answer and redirect on question page.'''
-    try:
-        Answer.objects.filter(pk=request.POST['answer_id']).delete()
-    except Answer.DoesNotExist:
-        raise Answer.DoesNotExist
+    Answer.objects.filter(
+        pk=kwargs['answer_id'],
+        author=request.user
+    ).delete()
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 

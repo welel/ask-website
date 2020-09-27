@@ -1,14 +1,22 @@
 <!-- templates/page_navigation.html -->
 <nav class='page_navigation'>
 	<ul>
+        {% if page.has_previous %}
+            <li><a href='{{	paginator.baseurl }}1'> << </a></li>
+            <li><a href='{{	paginator.baseurl }}{{ page.previous_page_number }}'> < </a></li>
+        {% endif %}
 		{% for p in paginator.page_range %}
 			{% if p	== page.number %}
 				<li class='active_page'>
-			{% else	%}
-				<li>
-			{% endif %}
-			<a href='{{	paginator.baseurl }}{{ p }}'>{{	p }}</a>
-				</li>
-			{% endfor %}
+                    <a href='{{	paginator.baseurl }}{{ p }}'>{{	p }}</a>
+                </li>
+			{% elif  p > page.number|add:-3 and p < page.number|add:+4  %}
+				<li><a href='{{	paginator.baseurl }}{{ p }}'>{{	p }}</a></li>
+            {% endif %}
+        {% endfor %}
+        {% if page.has_next %}
+            <li><a href='{{	paginator.baseurl }}{{ page.next_page_number }}'> > </a></li>
+            <li><a href='{{	paginator.baseurl }}{{ page.paginator.num_pages }}'> >> </a></li>
+        {% endif %}
 	</ul>
 </nav>

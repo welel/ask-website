@@ -14,8 +14,8 @@
 	<div class='wrapper'>
 		{%	for	question in	questions %}
 			<div class='question'>
-				<h3><a href='/question/{{ question.id }}/'>{{ question.text }}</a></h3>
-				<p>{{ question.author }} | {{ question.added_at }}</p>
+				<h3><a href='{% url 'question' question_id=question.id %}'>{{ question.text }}</a></h3>
+				<p>{{ question.author }} | {{ question.added_at|date:'M d, Y' }}</p>
 			</div>	
 		{%	endfor %}
 

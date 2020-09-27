@@ -14,11 +14,11 @@
 	<h1>{{ question.text }}</h1>
 	<div id='main_question_meta'>
 		<span id='main_question_author'>{{ question.author }}</span>
-		<span id='main_question_data'>&nbsp;|&nbsp;{{ question.added_at }}</span>
+		<span id='main_question_data'>&nbsp;|&nbsp;{{ question.added_at|date:'M d, Y' }}</span>
 	</div>
 	<hr>
 	{% if user == question.author %}
-		<form class='delete_button' action='/delete_question/' method='post'>
+		<form class='delete_button' action='{% url 'delete_question' question_id=question.id %}' method='post'>
 			{% csrf_token %}
 			<button type='submit'>Delete question</button>
 		</form>
@@ -47,13 +47,13 @@
 		<div class='main_question answers'>
 			<div class='answer_meta'>
 				<p>{{ answer.author }}</p>
-				<p>{{ answer.added_at }}</p>
+				<p>{{ answer.added_at|date:'M d, Y' }}</p>
 			</div>
 			<p class='answer_text'>{{ answer.text }}</p>
 			{% if user == answer.author %}
-				<form class='delete_button' action='/delete_answer/' method='post'>
+				<form class='delete_button' action='{% url 'delete_answer' answer_id=answer.id %}' method='post'>
 					{% csrf_token %}
-					<input type='text' name='answer_id' value='{{ answer.id }}' style='visibility: hidden;'/>
+					<input type='text' style='visibility: hidden;'/>
 					<button type='submit'>Delete answer</button>
 				</form>
 			{% endif %}
