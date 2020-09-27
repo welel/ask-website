@@ -1,4 +1,5 @@
 import os
+
 from dotenv import load_dotenv
 
 
@@ -17,7 +18,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
+    'core',
     'qa',
     'ask',
     ]
@@ -52,7 +54,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ask.wsgi.application'
 
-# to-do backup
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -90,7 +91,5 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-
 
 STATIC_URL = '/static/'

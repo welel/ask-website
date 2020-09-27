@@ -1,16 +1,16 @@
-from django.http import HttpResponse, Http404, HttpResponseRedirect
-from django.core.paginator import Paginator, Page, EmptyPage
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from django.forms import ValidationError
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_GET, require_POST
+
 from .forms import AskForm, AnswerForm, SignupForm, SigninForm
 from .models import Question, Answer
-from .shortcuts import paginate
+from core.shortcuts import paginate
+from core.views import handle_view
 
 
+@handle_view
 @require_GET
 def questions_list_all(request, *args, **kwargs):
     '''Renders a page with list of questions sorted by addition time.'''
@@ -27,6 +27,7 @@ def questions_list_all(request, *args, **kwargs):
 
 
 # TODO: split question form and answer form
+@handle_view
 def question_and_answers(request, *args, **kwargs):
     '''
     Renders a page of one question with a form for the answer
@@ -53,6 +54,7 @@ def question_and_answers(request, *args, **kwargs):
         })
 
 
+@handle_view
 @login_required(login_url='/signin/')
 def question_add(request, *args, **kwargs):
     '''
@@ -70,6 +72,7 @@ def question_add(request, *args, **kwargs):
     return render(request, 'ask.html', {'form': form})
 
 
+@handle_view
 @require_POST
 @login_required(login_url='/signin/')
 def delete_question(request, *args, **kwargs):
@@ -81,6 +84,7 @@ def delete_question(request, *args, **kwargs):
     return HttpResponseRedirect('/')
 
 
+@handle_view
 @require_POST
 @login_required(login_url='/signin/')
 def delete_answer(request, *args, **kwargs):
@@ -92,6 +96,7 @@ def delete_answer(request, *args, **kwargs):
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
+@handle_view
 def signup(request, *args, **kwargs):
     '''
     Renders a page with a form for user registration
@@ -109,6 +114,7 @@ def signup(request, *args, **kwargs):
     return render(request, 'signup.html', {'form': form})                     
 
 
+@handle_view
 def signin(request, *args, **kwargs):
     '''
     Renders a page with a form for login on the website
@@ -134,6 +140,7 @@ def signin(request, *args, **kwargs):
         })
 
 
+@handle_view
 def log_out(request, *args, **kwargs):
     logout(request)
     return HttpResponseRedirect('/')

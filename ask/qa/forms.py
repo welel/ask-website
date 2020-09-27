@@ -1,10 +1,10 @@
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.models import User
-from qa.models import Answer, Question
+from .models import Answer, Question
 
 
 class AskForm(forms.ModelForm):
