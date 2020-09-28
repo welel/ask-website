@@ -27,7 +27,7 @@
 		<p> Error: {{ e }} </p>
 	{% endfor %}
 	{% if user.is_authenticated %}
-		<form method='post'>
+		<form method='post' action='{% url 'add_answer' question_id=question.id %}'>
 			{% csrf_token %}
 			{% for field in form %}
 				<figure>

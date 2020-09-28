@@ -1,3 +1,4 @@
+import logging
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
@@ -10,13 +11,15 @@ from core.shortcuts import paginate
 from core.views import handle_view
 
 
+logger = logging.getLogger('ask')
+
 @handle_view
 @require_GET
 def questions_list_all(request, *args, **kwargs):
     '''Renders a page with list of questions sorted by addition time.'''
     questions = Question.objects.new()
     paginator, page = paginate(request, questions)
-    # Use reserve() routing new time
+    # TODO: Use reserve() routing new time
     paginator.baseurl = '/?page='
     return render(request, 'questions_list.html', { 
             'questions': paginator.get_page(page),
@@ -26,37 +29,38 @@ def questions_list_all(request, *args, **kwargs):
             })
 
 
-# TODO: split question form and answer form
 @handle_view
 def question_and_answers(request, *args, **kwargs):
     '''
     Renders a page of one question with a form for the answer
-    and users answers, and manages POST request from the form.
+    and users answers.
     '''
-    question_id = int(kwargs['question_id'])
-    question = get_object_or_404(Question, pk=question_id)
-    if request.method == 'POST':
-        answer = Answer(question=question, author=request.user)
-        form = AnswerForm(request.POST, instance=answer)
-        if form.is_valid():
-            form.save()
-    else:
-        form = AnswerForm()
-    try:
-        answers = Answer.objects.filter(question=question)
-    except Answer.DoesNotExist:
-        answers = []
+    question = get_object_or_404(Question, pk=int(kwargs['question_id']))
+    answers = Answer.objects.filter(question=question)
     return render(request, 'question.html', {
         'question': question,
         'answers': answers,
-        'form': form,
+        'form': AnswerForm(),
         'user': request.user
         })
 
 
 @handle_view
+@require_POST
 @login_required(login_url='/signin/')
-def question_add(request, *args, **kwargs):
+def add_answer(request, *args, **kwargs):
+    '''Handle an answer addition form from the question page.'''
+    question = get_object_or_404(Question, pk=int(kwargs['question_id']))
+    answer = Answer(question=question, author=request.user)
+    form = AnswerForm(request.POST, instance=answer)
+    if form.is_valid():
+        form.save()
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
+@handle_view
+@login_required(login_url='/signin/')
+def add_question(request, *args, **kwargs):
     '''
     Renders a page with a form for adding a question
     and manages POST requests to the form.

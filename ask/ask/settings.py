@@ -5,9 +5,12 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_DIR = os.path.dirname(BASE_DIR)
+
 SECRET_KEY = os.getenv('SECRET_KEY')
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -81,6 +84,31 @@ AUTH_PASSWORD_VALIDATORS = [
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.PBKDF2PasswordHasher'
 ]
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'formatter': {
+          'format': '{levelname} {asctime} {module} {process:d}\n{message}\n\n',
+          'style': '{'
+        }
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(PROJECT_DIR, 'log/ask/log.log'),
+            'formatter': 'formatter'
+        }
+    },
+    'loggers': {
+        'ask': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+        }
+    }
+}
 
 LANGUAGE_CODE = 'en-GB'
 
