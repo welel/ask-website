@@ -1,4 +1,9 @@
+import logging
+
 from django.core.paginator import Paginator, EmptyPage
+
+
+logger = logging.getLogger('ask')
 
 
 def paginate(request, query_set):
@@ -6,6 +11,11 @@ def paginate(request, query_set):
     try:
         limit = int(request.GET.get('limit', 15))
     except ValueError:
+        logger.warning('''Client trying to send incorrect query param `limit`.
+        Expected int value, but {} was send. Value: {}'''.format(
+            type(request.GET.get('limit')),
+            request.GET.get('limit')
+        ))
         limit = 15
     if limit > 100:
         limit = 100

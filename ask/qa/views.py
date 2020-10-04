@@ -1,4 +1,5 @@
 import logging
+
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
@@ -12,6 +13,7 @@ from core.views import handle_view
 
 
 logger = logging.getLogger('ask')
+
 
 @handle_view
 @require_GET

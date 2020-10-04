@@ -23,13 +23,18 @@
 				<figcaption>{{ field.label }}</figcaption>
 				{{ field }}
 			</figure>
-			{% if field.errors %}<p>{{ field.errors }}</p>{% endif %}
+			{% if field.errors %}
+                <figure>
+                    <figcaption style='color: red;'>{{ field.label }}: warnings</figcaption>
+                    {{ field.errors }}
+                </figure>
+            {% endif %}
 		{% endfor %}
 			<figure>
 				<button type='submit'>Sing Up</button>
 			</figure>
 	</form>
-	<p>"The beginning of knowledge is the discovery of something we do not understand."<br/>Frank Herbert</p>
+    <p>"The beginning of knowledge is the discovery of something we do not understand."<br/><i>Frank Herbert</i></p>
 </div>
 
 
