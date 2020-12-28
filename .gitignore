@@ -1,7 +1,6 @@
 __pycache__
 *.pyc
-env
-.env
-migrations
-.idea
-*.log
+migrations/
+data/
+*.sqlite3
+*.ini
