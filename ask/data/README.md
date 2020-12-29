@@ -8,14 +8,14 @@ Data stores in **json** format, where one dict of list represents one row in dat
 ​	User:
 
 ```json
-	{
+{
         "model": "auth.user",
         "pk": 1032,
         "fields": {
             "password": "PrettyGardenPrettyGardenPrettyGarden",
             "username": "PrettyGarden"
         }
-	}
+}
 ```
 
 ​	Question:
@@ -34,7 +34,7 @@ Data stores in **json** format, where one dict of list represents one row in dat
 
 ​	Answer:
 
-```
+```json
     {
         "model": "qa.answer",
         "pk": 243,
@@ -51,7 +51,7 @@ Data stores in **json** format, where one dict of list represents one row in dat
 
 To fill database with that data you should feed it to **manage.py** with commands (consider the order of commands):
 
-```
+```cmd
 manage.py loaddata data/users.json
 manage.py loaddata data/questions.json
 manage.py loaddata data/answers.json
