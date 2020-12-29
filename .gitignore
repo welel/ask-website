@@ -1,6 +1,5 @@
 __pycache__
 *.pyc
 migrations/
-data/
 *.sqlite3
 *.ini
