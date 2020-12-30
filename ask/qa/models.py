@@ -24,6 +24,15 @@ class Question(models.Model):
         '''Returns a url of the question.'''
         return '/question/' + str(self.id) + '/'
         
+    def to_json(self):
+        """Converts to dict of json format."""
+        return {   
+            'id': self.pk,
+            'text': self.text,
+            'author': self.author.username,
+            'date': self.added_at.strftime('%b %d, %Y')
+        }
+        
     class Meta:
         ordering = ['-added_at']
 
