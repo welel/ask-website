@@ -4,7 +4,7 @@
 		<nav>
 			<ul>
 				<li id='logo' class='header_li_left'><a href='{% url 'root' %}'>Q</a></li>
-				<li class='header_li_left'><a href='{% url 'list_questions' %}'>Questions</a></li>
+				<li class='header_li_left'><a href='{% url 'root' %}'>Questions</a></li>
 				<li id='add_question' class='header_li_left'><a href='{% url 'add_question' %}'>Add Question</a></li>
 				{% if user.is_authenticated %}
 				    <li class='header_li_right'><a id='header_user' href='{% url 'logout' %}'>{{ user }}</a></li>

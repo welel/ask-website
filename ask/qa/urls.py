@@ -8,7 +8,6 @@ urlpatterns = [
     path('signin/', signin, name='login'),
     path('signup/', signup, name='register'),
     path('logout/', log_out, name='logout'),
-    path('new/', questions_list_all, name='list_questions'),
     path('ask/', add_question, name='add_question'),
     path('question/<int:question_id>/',
          question_and_answers,
