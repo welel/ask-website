@@ -12,14 +12,70 @@
 {% block main %}
 <main>
 	<div class='wrapper'>
+		<div id='question_section'>
 		{%	for	question in	questions %}
 			<div class='question'>
 				<h3><a href='{% url 'question' question_id=question.id %}'>{{ question.text }}</a></h3>
 				<p>{{ question.author }} | {{ question.added_at|date:'M d, Y' }}</p>
 			</div>	
 		{%	endfor %}
-
-		{% include 'page_navigation.html' %}	
+		</div>
+		
+	<form id='load_more' method='post' action='{% url 'load_more' %}'>
+		{% csrf_token %}
+		<input type='submit' value='Load more'/>
+	</form>
+	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<div>
 </main>
+{% endblock	%}
+
+{% block scripts %}
+	<script>
+    $("#load_more").submit(function (e) {
+		e.preventDefault();
+		var qnum = $('.question').length
+        $.ajax(
+			{
+				url: "{% url 'load_more' %}",
+				type: 'POST',
+				dataType: 'json',
+				data: {'qusetions_num': qnum, 'csrfmiddlewaretoken': "{{ csrf_token }}"},
+				success: function (response) {
+					var questions = response['questions']
+					var element = document.getElementById("load_more");
+					if (questions.length == 0) {
+						element.style.display = "none";
+					} else {
+						element.style.display = "block";
+						for (let i = 0; i < questions.length; i++) {
+							var question = questions[i]
+							var href = "{% url 'question' 0 %}"
+							href = href.split('/')
+							href.pop()
+							href.pop()
+							href.push(question['id'].toString())
+							href = href.join('/')
+							$("#question_section").append(
+								`
+								<div class='question'>
+									<h3><a href='${href}'>${question['text']}</a></h3>
+									<p>${question['author']} | ${question['date']}</p>
+								</div>
+								`
+							)
+					}
+					}
+					
+				},
+				error: function (response) {
+					console.log('Error')
+				}
+			}
+		)
+    })
+	</script>
 {% endblock	%}
