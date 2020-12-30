@@ -8,7 +8,6 @@ from django.views.decorators.http import require_GET, require_POST
 
 from .forms import AskForm, AnswerForm, SignupForm, SigninForm
 from .models import Question, Answer
-from core.shortcuts import paginate
 from core.views import handle_view
 
 
@@ -16,18 +15,12 @@ from core.views import handle_view
 logger = logging.getLogger('ask')
 
 
-@handle_view
 @require_GET
 def questions_list_all(request, *args, **kwargs):
     '''Renders a page with list of questions sorted by addition time.'''
-    questions = Question.objects.new()
-    paginator, page = paginate(request, questions)
-    # TODO: Use reserve() routing new time
-    paginator.baseurl = '/?page='
+    questions = Question.objects.all()[:15]
     return render(request, 'questions_list.html', { 
-            'questions': paginator.get_page(page),
-            'paginator': paginator, 
-            'page': page,
+            'questions': questions,
             'user': request.user 
             })
 

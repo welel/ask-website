@@ -2,11 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-class QuestionManager(models.Manager):
-    def new(self):
-        '''Returns QuerySet of questions sorted by addition time.'''
-        return self.order_by('-id')
-
 
 class Question(models.Model):
     '''The main model, represents questions that asked by users.'''
@@ -24,11 +19,13 @@ class Question(models.Model):
         on_delete=models.CASCADE,
         verbose_name='Author of the question'
     )
-    objects = QuestionManager()
 
     def get_url(self):
         '''Returns a url of the question.'''
         return '/question/' + str(self.id) + '/'
+        
+    class Meta:
+        ordering = ['-added_at']
 
 
 class Answer(models.Model):
