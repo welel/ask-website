@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
     'qa.apps.QaConfig',
     ]
 
@@ -81,31 +82,6 @@ AUTH_PASSWORD_VALIDATORS = [
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.PBKDF2PasswordHasher'
 ]
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'formatter': {
-          'format': '{levelname} {asctime} {module} {process:d}\n{message}\n\n',
-          'style': '{'
-        }
-    },
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(PROJECT_DIR, 'log/ask/log.log'),
-            'formatter': 'formatter'
-        }
-    },
-    'loggers': {
-        'ask': {
-            'handlers': ['file'],
-            'level': 'DEBUG',
-        }
-    }
-}
 
 LANGUAGE_CODE = 'en-GB'
 

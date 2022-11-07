@@ -2,9 +2,15 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-
 class Question(models.Model):
-    '''The main model, represents questions that asked by users.'''
+    """Represent a question asked by a user.
+    
+    **Fieldes**
+        text: a question text.
+        added_at: datetime of question creation.
+        author: fk to a user (author of a quesiton).
+    
+    """
     text = models.TextField(
         max_length=200,
         verbose_name='Question text'
@@ -20,8 +26,15 @@ class Question(models.Model):
         verbose_name='Author of the question'
     )
 
+    def __str__(self):
+        return self.text[:100]
+    
     def get_url(self):
-        '''Returns a url of the question.'''
+        """Returns a url of the question.
+        
+        TODO: Refactor to a `get_absolute_url`.
+        
+        """
         return '/question/' + str(self.id) + '/'
         
     def to_json(self):
@@ -38,7 +51,15 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
-    '''Represents answers of users on questions.'''
+    """Represents an answer to a question.
+    
+    **Fields**
+        text: an answer text to a question.
+        added_at: datetime of answer creation.
+        question: fk to a question.
+        author: fk to a user (author of an answer).
+
+    """
     text = models.TextField(
         max_length=10000,
         verbose_name='Answer text'

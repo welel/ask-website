@@ -9,17 +9,21 @@ from .models import Answer, Question
 
 
 class AskForm(forms.ModelForm):
-    '''Asking question form.'''
+    """Create a questin form."""
+
     class Meta:
         model = Question
         fields = ['text']
-        widgets = {'text': forms.Textarea(attrs={'placeholder': '''You can '''+
-					'''start your question with "What", "Why", "How", etc.'''})}
+        widgets = {'text': forms.Textarea(
+            attrs={'placeholder': 'You can start your question with \
+                                  "What", "Why", "How", etc.'})
+        }
         labels = {'text': 'Question text'}
 
 
 class AnswerForm(forms.ModelForm):
-    '''Answering question form.'''
+    """Add an answer to a question form."""
+
     class Meta:
         model = Answer
         fields = ['text']
@@ -29,41 +33,27 @@ class AnswerForm(forms.ModelForm):
 
 
 class SignupForm(forms.ModelForm):
-    '''Website registration form.'''
+    """User registration form."""
+
     def __init__(self, *args, **kwargs):
         super(SignupForm, self).__init__(*args, **kwargs)
-        self.confirm_password = forms.CharField(
-                                           widget=forms.PasswordInput(), 
-                                           label='Password Confirmation'
-                                          )   
+        self.confirm_password = forms.CharField(widget=forms.PasswordInput(), 
+                                                label='Password Confirmation')
+
     class Meta:
         model = User
-        fields = [
-                    'first_name',
-                    'last_name',
-                    'username', 
-                    'email', 
-                    'password',
-                    ]
-        widgets = { 
-                'email': forms.EmailInput(), 
-                'password' : forms.PasswordInput()
-                }
-        labels = {
-                'first_name': 'First name',
-                'last_name': 'Last name',
-                'username': 'Username',
-                'email': 'Email',
-                'password': 'Password'
-                } 
+        fields = ['first_name', 'last_name', 'username', 'email', 'password',]
+        widgets = {'email': forms.EmailInput(),
+                   'password' : forms.PasswordInput()}
+        labels = {'first_name': 'First name', 'last_name': 'Last name',
+                  'username': 'Username', 'email': 'Email',
+                  'password': 'Password'} 
+    
     def clean_username(self):
         username = self.cleaned_data['username']
-        if User.objects.exclude(
-                    pk=self.instance.pk
-                    ).filter(username=username).exists():
-            raise ValidationError(
-                    'Username "%s" is already exists.' % username
-                    )
+        if User.objects.exclude(pk=self.instance.pk).filter(
+                                                username=username).exists():
+            raise ValidationError(f'Username "{username}" is already exists.')
         return username
 
     def clean_password(self):
@@ -74,7 +64,8 @@ class SignupForm(forms.ModelForm):
 
 
 class SigninForm(forms.ModelForm):
-    '''Website login form.'''
+    """Login to the website form."""
+
     class Meta:
         model = User
         fields = ['username', 'password']
@@ -85,7 +76,8 @@ class SigninForm(forms.ModelForm):
         password = self.cleaned_data['password']
         password = make_password(password, salt=settings.SECRET_KEY)
         try:
-            self.instance = User.objects.get(username=username, password=password)
+            self.instance = User.objects.get(username=username,
+                                             password=password)
         except User.DoesNotExist:
-            raise ValidationError('Username or password is wrong')
+            raise ValidationError('Username or password is wrong!')
         return self.cleaned_data

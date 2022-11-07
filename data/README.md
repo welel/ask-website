@@ -1,11 +1,11 @@
-# Data for the site
+# Data for the website
 
-There is 3 files with data for database.
-Data stores in **json** format, where one dict of list represents one row in database.
+There are 3 files with data for the database.
+Data stores in **json** format, where one object represents one row in the database.
 
-#### Examples: 
+# Data overview:
 
-​	User:
+## User object:
 
 ```json
 {
@@ -18,7 +18,7 @@ Data stores in **json** format, where one dict of list represents one row in dat
 }
 ```
 
-​	Question:
+## Question object:
 
 ```json
     {
@@ -32,14 +32,14 @@ Data stores in **json** format, where one dict of list represents one row in dat
     }
 ```
 
-​	Answer:
+## Answer object:
 
 ```json
     {
         "model": "qa.answer",
         "pk": 243,
         "fields": {
-            "text": "There are a variety of reasons for getting a tattoo. You can ... time.",
+            "text": "There are a variety of reasons for ...",
             "added_at": "2020-12-29T10:14:26.857Z",
             "question": 123845,
             "author": 1012
@@ -47,13 +47,13 @@ Data stores in **json** format, where one dict of list represents one row in dat
     }
 ```
 
+# Data loading
 
-
-To fill database with that data you should feed it to **manage.py** with commands (consider the order of commands):
+To fill the database with that data, you should run a script `load_data.sh` or do it manually.
+Feed it to **manage.py** with commands (consider the order of commands):
 
 ```cmd
 python manage.py loaddata data/users.json
 python manage.py loaddata data/questions.json
 python manage.py loaddata data/answers.json
 ```
-
