@@ -52,8 +52,8 @@ Data stores in **json** format, where one dict of list represents one row in dat
 To fill database with that data you should feed it to **manage.py** with commands (consider the order of commands):
 
 ```cmd
-manage.py loaddata data/users.json
-manage.py loaddata data/questions.json
-manage.py loaddata data/answers.json
+python manage.py loaddata data/users.json
+python manage.py loaddata data/questions.json
+python manage.py loaddata data/answers.json
 ```
 

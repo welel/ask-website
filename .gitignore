@@ -3,3 +3,5 @@ __pycache__
 migrations/
 *.sqlite3
 *.ini
+env/
+todo.md
