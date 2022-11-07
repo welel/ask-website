@@ -9,7 +9,7 @@ This is a question-and-answer website where questions are asked and answered by 
 
 1. Clone or download the repository.
 
-2. Create virtual enviroment and install requrements from `requirements.txt`.
+2. Create virtual environment and install requirements from `requirements.txt`.
 
 3. Make migrations and migrate.
 
