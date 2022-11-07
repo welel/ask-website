@@ -1,13 +1,10 @@
 <!-- templates/signup.html -->
 {% extends 'base.html' %}
 
-{% block title %}
-	Sign Up
-{% endblock %}
 
-{% block header %}
-	{% include 'header.html' %}
-{% endblock %}
+{% block title %}Sign Up{% endblock %}
+
+{% block header %}{% include 'header.html' %}{% endblock %}
 
 {% block main %}
 <div class='sign' id='signup'>
@@ -24,7 +21,7 @@
 				{{ field }}
 			</figure>
 			{% if field.errors %}
-                <figure>
+                <figure class="field_error">
                     <figcaption style='color: red;'>{{ field.label }}: warnings</figcaption>
                     {{ field.errors }}
                 </figure>
@@ -36,7 +33,4 @@
 	</form>
     <p>"The beginning of knowledge is the discovery of something we do not understand."<br/><i>Frank Herbert</i></p>
 </div>
-
-
-
 {% endblock %}
